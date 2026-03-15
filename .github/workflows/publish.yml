@@ -2,8 +2,13 @@ name: Publish
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - master
+    paths:
+      - 'libs/**/package.json'
+      - 'CHANGELOG.md'
+      - 'libs/**/CHANGELOG.md'
+  workflow_dispatch:
 
 jobs:
   publish:
