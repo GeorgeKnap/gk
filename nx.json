@@ -57,6 +57,9 @@
   },
   "release": {
     "projects": ["libs/*"],
+    "changelog": {
+      "automaticFromRef": "8a32dd9"
+    },
     "version": {
       "preVersionCommand": "npx nx run-many -t build"
     }
