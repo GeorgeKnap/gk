@@ -1,7 +1,7 @@
 {
-  "name": "libs/updatable-rx-resource",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "updatable-rx-resource/src",
+  "name": "updatable-rx-resource",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/updatable-rx-resource/src",
   "prefix": "lib",
   "projectType": "library",
   "release": {
@@ -17,12 +17,12 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "updatable-rx-resource/ng-package.json",
-        "tsConfig": "updatable-rx-resource/tsconfig.lib.json"
+        "project": "libs/updatable-rx-resource/ng-package.json",
+        "tsConfig": "libs/updatable-rx-resource/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "updatable-rx-resource/tsconfig.lib.prod.json"
+          "tsConfig": "libs/updatable-rx-resource/tsconfig.lib.prod.json"
         },
         "development": {}
       },

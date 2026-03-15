@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LibsUpdatableRxResource } from './updatable-rx-resource';
+import { UpdatableRxResource } from './updatable-rx-resource';
 
-describe('LibsUpdatableRxResource', () => {
-  let component: LibsUpdatableRxResource;
-  let fixture: ComponentFixture<LibsUpdatableRxResource>;
+describe('UpdatableRxResource', () => {
+  let component: UpdatableRxResource;
+  let fixture: ComponentFixture<UpdatableRxResource>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibsUpdatableRxResource],
+      imports: [UpdatableRxResource],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LibsUpdatableRxResource);
+    fixture = TestBed.createComponent(UpdatableRxResource);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
