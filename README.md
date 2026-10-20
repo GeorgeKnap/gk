@@ -3,8 +3,12 @@
 An npm-workspace Nx repository containing one publishable Angular library:
 `packages/resumable-rx-resource`.
 
-The library currently contains the generated standalone component and a Vitest
-smoke test. The resumable-resource API is not implemented yet.
+The package exports `resumableRxResource`, a wrapper for Angular's `rxResource`
+whose local value writes do not cancel its observable subscription. A writable
+`linkedSignal` holds local edits until the next source emission or resource reset.
+
+See the [usage guide](packages/resumable-rx-resource/README.md) for examples, API
+details, equality behavior, and differences from native resource state.
 
 ## Prerequisites
 

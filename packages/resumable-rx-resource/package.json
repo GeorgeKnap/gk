@@ -1,10 +1,11 @@
 {
   "name": "resumable-rx-resource",
   "version": "0.0.1",
-  "description": "Angular library scaffold for resumable RxJS resources.",
+  "description": "Angular rxResource with writable local values that keep the source stream subscribed.",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "^22.2.3"
+    "@angular/core": "^22.2.3",
+    "rxjs": "^7.8.2"
   },
   "publishConfig": {
     "access": "public",
