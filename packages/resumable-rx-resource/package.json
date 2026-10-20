@@ -1,0 +1,14 @@
+{
+  "name": "resumable-rx-resource",
+  "version": "0.0.1",
+  "description": "Angular library scaffold for resumable RxJS resources.",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": "^22.2.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "sideEffects": false
+}
