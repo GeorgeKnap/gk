@@ -21,13 +21,13 @@ import { tap } from 'rxjs';
  * Local writes report `local` status; reload eligibility and loader metadata continue
  * to reflect the untouched native resource. All options and overloads match rxResource.
  */
-export function resumableRxResource<T, R>(
+export function updatableRxResource<T, R>(
   options: RxResourceOptions<T, R> & { defaultValue: NoInfer<T> },
 ): ResourceRef<T>;
-export function resumableRxResource<T, R>(
+export function updatableRxResource<T, R>(
   options: RxResourceOptions<T, R>,
 ): ResourceRef<T | undefined>;
-export function resumableRxResource<T, R>(
+export function updatableRxResource<T, R>(
   options: RxResourceOptions<T, R>,
 ): ResourceRef<T | undefined> {
   const injector = options.injector ?? inject(Injector);

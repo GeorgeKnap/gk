@@ -22,9 +22,9 @@
     }
   ],
   "release": {
-    "projects": ["resumable-rx-resource"],
+    "projects": ["updatable-rx-resource"],
     "version": {
-      "preVersionCommand": "npx nx build resumable-rx-resource"
+      "preVersionCommand": "npx nx build updatable-rx-resource"
     }
   },
   "targetDefaults": {

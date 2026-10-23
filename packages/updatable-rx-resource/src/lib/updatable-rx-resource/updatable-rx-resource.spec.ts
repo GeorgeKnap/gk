@@ -13,9 +13,9 @@ import {
 import { rxResource } from '@angular/core/rxjs-interop';
 import { TestBed } from '@angular/core/testing';
 import { EMPTY, NEVER, Observable, of, Subject, throwError } from 'rxjs';
-import { resumableRxResource } from './resumable-rx-resource';
+import { updatableRxResource } from './updatable-rx-resource';
 
-describe('resumableRxResource', () => {
+describe('updatableRxResource', () => {
   const writes: [string, (resource: ResourceRef<number>) => void][] = [
     ['value.set', (resource) => resource.value.set(2)],
     ['value.update', (resource) => resource.value.update(() => 2)],
@@ -29,7 +29,7 @@ describe('resumableRxResource', () => {
     const unsubscribed = vi.fn();
     let abortSignal: AbortSignal | undefined;
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         defaultValue: 0,
         stream: (params) => {
           abortSignal = params.abortSignal;
@@ -67,13 +67,13 @@ describe('resumableRxResource', () => {
 
   it('exposes only the function from the public entry', async () => {
     const entry = await import('../../index');
-    expect(Object.keys(entry)).toEqual(['resumableRxResource']);
+    expect(Object.keys(entry)).toEqual(['updatableRxResource']);
   });
 
   it('uses a real writable signal and preserves updates before the first emission', async () => {
     const events = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events }),
+      updatableRxResource({ stream: () => events }),
     );
     expect(isSignal(resource.value)).toBe(true);
     expect(resource.value()).toBeUndefined();
@@ -95,7 +95,7 @@ describe('resumableRxResource', () => {
 
   it('supports synchronous sources and retains local edits after completion', () => {
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => of(1, 2) }),
+      updatableRxResource({ stream: () => of(1, 2) }),
     );
     TestBed.tick();
     expect(resource.value()).toBe(2);
@@ -108,7 +108,7 @@ describe('resumableRxResource', () => {
   it('resets a local edit on an identical source emission', async () => {
     const events = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events, defaultValue: 0 }),
+      updatableRxResource({ stream: () => events, defaultValue: 0 }),
     );
     TestBed.tick();
     events.next(1);
@@ -123,7 +123,7 @@ describe('resumableRxResource', () => {
   it('resets local status even when the next emission equals the edited value', async () => {
     const events = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events }),
+      updatableRxResource({ stream: () => events }),
     );
     TestBed.tick();
     events.next(1);
@@ -142,7 +142,7 @@ describe('resumableRxResource', () => {
       return previous.id === next.id;
     });
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events, equal }),
+      updatableRxResource({ stream: () => events, equal }),
     );
     TestBed.tick();
     const first = { id: 1, label: 'first' };
@@ -165,7 +165,7 @@ describe('resumableRxResource', () => {
   it('restores native errors, permits set recovery, and preserves update-on-error throwing', async () => {
     const events = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events, defaultValue: 0 }),
+      updatableRxResource({ stream: () => events, defaultValue: 0 }),
     );
     TestBed.tick();
     events.next(1);
@@ -199,7 +199,7 @@ describe('resumableRxResource', () => {
     ],
   ])('preserves native %s behavior', (_, stream) => {
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream }),
+      updatableRxResource({ stream }),
     );
     TestBed.tick();
     expect(resource.status()).toBe('error');
@@ -210,7 +210,7 @@ describe('resumableRxResource', () => {
 
   it('uses defaults and supports local undefined without claiming a defined value', () => {
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource<number | undefined, undefined>({
+      updatableRxResource<number | undefined, undefined>({
         params: () => undefined,
         stream: () => NEVER,
         defaultValue: 5,
@@ -229,7 +229,7 @@ describe('resumableRxResource', () => {
   it('reloads the native source without giving its loader the facade local status', () => {
     const previousStatuses: string[] = [];
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         defaultValue: 0,
         stream: ({ previous }) => {
           previousStatuses.push(previous.status);
@@ -252,7 +252,7 @@ describe('resumableRxResource', () => {
     const streams = new Map<number, Subject<number>>();
     const abortSignals: AbortSignal[] = [];
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         params,
         defaultValue: 0,
         stream: (request) => {
@@ -288,7 +288,7 @@ describe('resumableRxResource', () => {
   it('clears a local override when parameters change during initial loading', () => {
     const params = signal(1);
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         params,
         stream: (): Observable<number> => NEVER,
         defaultValue: 0,
@@ -304,7 +304,7 @@ describe('resumableRxResource', () => {
   it('provides reactive readonly views and hasValue', async () => {
     const events = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events }),
+      updatableRxResource({ stream: () => events }),
     );
     const readonlyResource: Resource<number | undefined> =
       resource.asReadonly();
@@ -324,7 +324,7 @@ describe('resumableRxResource', () => {
 
   it('does not track the current value read by update', () => {
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         stream: (): Observable<number> => NEVER,
         defaultValue: 0,
       }),
@@ -344,18 +344,18 @@ describe('resumableRxResource', () => {
 
   it('supports an explicit injector outside an injection context', () => {
     const injector = TestBed.inject(Injector);
-    const resource = resumableRxResource({ injector, stream: () => of(1) });
+    const resource = updatableRxResource({ injector, stream: () => of(1) });
     TestBed.tick();
     expect(resource.value()).toBe(1);
   });
 
   it('requires an injection context when no injector is supplied', () => {
-    expect(() => resumableRxResource({ stream: () => of(1) })).toThrow();
+    expect(() => updatableRxResource({ stream: () => of(1) })).toThrow();
   });
 
   it('resets local state on explicit destruction and ignores subsequent writes', () => {
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         params: () => undefined,
         stream: (): Observable<number> => NEVER,
         defaultValue: 0,
@@ -377,7 +377,7 @@ describe('resumableRxResource', () => {
     );
     const events = new Subject<number>();
     let abortSignal: AbortSignal | undefined;
-    const resource = resumableRxResource({
+    const resource = updatableRxResource({
       injector,
       stream: (params) => {
         abortSignal = params.abortSignal;
@@ -399,7 +399,7 @@ describe('resumableRxResource', () => {
   it('clears local state on a repeated object reference and keeps the latest unread emission', async () => {
     const events = new Subject<{ id: number }>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => events }),
+      updatableRxResource({ stream: () => events }),
     );
     const first = { id: 1 };
     TestBed.tick();
@@ -417,10 +417,10 @@ describe('resumableRxResource', () => {
 
   it('passes the native params chaining context and narrows loader params', () => {
     const parent = TestBed.runInInjectionContext(() =>
-      resumableRxResource({ stream: () => of(2) }),
+      updatableRxResource({ stream: () => of(2) }),
     );
     const child = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         params: ({ chain }) => chain(parent),
         stream: ({ params }) => {
           expectTypeOf(params).toEqualTypeOf<number>();
@@ -440,7 +440,7 @@ describe('resumableRxResource', () => {
     const fails = signal(true);
     const failure = new Error('invalid params');
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         params: () => {
           if (fails()) {
             throw failure;
@@ -461,22 +461,22 @@ describe('resumableRxResource', () => {
   });
 
   it('has the native overloads, default inference, readonly types, and hasValue narrowing', () => {
-    expectTypeOf(resumableRxResource).toEqualTypeOf<typeof rxResource>();
+    expectTypeOf(updatableRxResource).toEqualTypeOf<typeof rxResource>();
     TestBed.runInInjectionContext(() => {
-      const optional = resumableRxResource({ stream: () => of(1) });
+      const optional = updatableRxResource({ stream: () => of(1) });
       expectTypeOf(optional).toEqualTypeOf<ResourceRef<number | undefined>>();
       if (optional.hasValue()) {
         expectTypeOf(optional).toEqualTypeOf<ResourceRef<number>>();
         expectTypeOf(optional.value()).toEqualTypeOf<number>();
       }
-      const required = resumableRxResource({
+      const required = updatableRxResource({
         stream: () => of(1),
         defaultValue: 0,
       });
       expectTypeOf(required).toEqualTypeOf<ResourceRef<number>>();
       expectTypeOf(required.asReadonly()).toEqualTypeOf<Resource<number>>();
       expectTypeOf(required.value.asReadonly()).toEqualTypeOf<Signal<number>>();
-      const nullable = resumableRxResource({
+      const nullable = updatableRxResource({
         stream: () => of<number | undefined>(1),
         defaultValue: undefined,
       });
@@ -484,7 +484,7 @@ describe('resumableRxResource', () => {
         expectTypeOf(nullable.value()).toEqualTypeOf<number>();
       }
       const params = signal<{ id: number } | undefined>(undefined);
-      const parameterized = resumableRxResource({
+      const parameterized = updatableRxResource({
         params,
         stream: (request) => {
           expectTypeOf(request.params).toEqualTypeOf<{ id: number }>();
@@ -499,12 +499,12 @@ describe('resumableRxResource', () => {
 
   it('rejects invalid options and writes at compile time', () => {
     const checkInvalidInputs = () => {
-      resumableRxResource({
+      updatableRxResource({
         stream: () => of(1),
         // @ts-expect-error defaultValue must not widen the inferred stream type.
         defaultValue: 'invalid',
       });
-      const resource = resumableRxResource({ stream: () => of(1) });
+      const resource = updatableRxResource({ stream: () => of(1) });
       // @ts-expect-error value writes must match the stream's inferred type.
       resource.set('invalid');
       // @ts-expect-error updater results must match the resource value type.
@@ -513,7 +513,7 @@ describe('resumableRxResource', () => {
       resource.asReadonly().set(1);
       // @ts-expect-error readonly signals do not expose set.
       resource.value.asReadonly().set(1);
-      resumableRxResource({
+      updatableRxResource({
         // @ts-expect-error streams must return an Observable, not a Promise.
         stream: () => Promise.resolve(1),
       });
@@ -528,7 +528,7 @@ describe('resumableRxResource', () => {
       return previous.id === next.id;
     });
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         stream: (): Observable<{ id: number }> =>
           throwError(() => new Error('failed')),
         equal,
@@ -545,7 +545,7 @@ describe('resumableRxResource', () => {
   it('restores the default on destruction even if custom equality ignores the changed fields', () => {
     const defaultValue = { id: 1, label: 'default' };
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         stream: (): Observable<typeof defaultValue> => NEVER,
         defaultValue,
         equal: (previous, next) => previous.id === next.id,
@@ -562,7 +562,7 @@ describe('resumableRxResource', () => {
     const params = signal<number | undefined>(1);
     const oldEvents = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
-      resumableRxResource({
+      updatableRxResource({
         params,
         stream: () => oldEvents,
         defaultValue: 0,

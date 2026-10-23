@@ -1,13 +1,13 @@
-# resumable-rx-resource
+# updatable-rx-resource
 
 Angular's `rxResource` API with local value edits that keep the source stream alive.
 
 Native `rxResource` switches to `local` state and cancels its current subscription
-when you write to its value. `resumableRxResource` instead writes to a separate
+when you write to its value. `updatableRxResource` instead writes to a separate
 `linkedSignal`. The native resource keeps receiving observable emissions, and the
 next emission replaces the local edit.
 
-The package exports only `resumableRxResource`. Resource and option types remain
+The package exports only `updatableRxResource`. Resource and option types remain
 available from Angular; there is no component, custom options type, or resume method.
 
 ## Installation And Requirements
@@ -15,7 +15,7 @@ available from Angular; there is no component, custom options type, or resume me
 Once published to npm:
 
 ```bash
-npm install resumable-rx-resource
+npm install @gk/updatable-rx-resource
 ```
 
 Requires Angular `^22.2.3` and RxJS `^7.8.2`. Both are external peer dependencies,
@@ -29,13 +29,13 @@ Create the resource in an Angular injection context, such as a service field:
 ```typescript
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { resumableRxResource } from 'resumable-rx-resource';
+import { updatableRxResource } from '@gk/updatable-rx-resource';
 
 @Injectable({ providedIn: 'root' })
 export class CounterStore {
   private readonly source = new BehaviorSubject({ count: 0 });
 
-  readonly counter = resumableRxResource({
+  readonly counter = updatableRxResource({
     stream: () => this.source,
     defaultValue: { count: 0 },
   });
@@ -79,7 +79,7 @@ Options use Angular's current `params`/`stream` API:
 ```typescript
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { resumableRxResource } from 'resumable-rx-resource';
+import { updatableRxResource } from '@gk/updatable-rx-resource';
 
 interface User {
   id: number;
@@ -91,7 +91,7 @@ export class UserStore {
   private readonly http = inject(HttpClient);
   readonly userId = signal<number | undefined>(1);
 
-  readonly user = resumableRxResource({
+  readonly user = updatableRxResource({
     params: () => this.userId(),
     stream: ({ params: id }) => this.http.get<User>(`/api/users/${id}`),
   });
@@ -125,13 +125,13 @@ The function has the same overloads as `rxResource`:
 import type { ResourceRef } from '@angular/core';
 import type { RxResourceOptions } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { resumableRxResource } from 'resumable-rx-resource';
+import { updatableRxResource } from '@gk/updatable-rx-resource';
 
 // Within an injection context:
-const optional = resumableRxResource({ stream: () => of(1) });
+const optional = updatableRxResource({ stream: () => of(1) });
 // ResourceRef<number | undefined>
 
-const required = resumableRxResource({
+const required = updatableRxResource({
   stream: () => of(1),
   defaultValue: 0,
 });
@@ -205,7 +205,7 @@ successful value; emit an appropriate fallback when one is intended.
 Pass `equal` exactly as you would to `rxResource`, for example:
 
 ```typescript
-const resource = resumableRxResource({
+const resource = updatableRxResource({
   stream: () => users$,
   equal: (previous, next) => previous.id === next.id,
 });
@@ -228,7 +228,7 @@ those fields need to trigger rendering.
 The API matches native `rxResource`, but preserving its subscription intentionally
 changes local-write behavior:
 
-| Scenario                               | Native `rxResource`                              | `resumableRxResource`                                                                |
+| Scenario                               | Native `rxResource`                              | `updatableRxResource`                                                                |
 | -------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | Local write during a live stream       | Enters local state and cancels the subscription. | Enters public local state; the subscription stays active.                            |
 | Next event from that stream            | No longer received after cancellation.           | Replaces the local overlay and resumes native presentation.                          |
@@ -254,13 +254,13 @@ resource elsewhere, pass an injector explicitly:
 ```typescript
 import type { Injector, ResourceRef } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { resumableRxResource } from 'resumable-rx-resource';
+import { updatableRxResource } from '@gk/updatable-rx-resource';
 
 export function createCounterResource(
   injector: Injector,
   source: Observable<number>,
 ): ResourceRef<number> {
-  return resumableRxResource({
+  return updatableRxResource({
     injector,
     stream: () => source,
     defaultValue: 0,
@@ -294,11 +294,11 @@ From the repository root:
 
 ```bash
 npm ci
-npx nx run-many -t lint test build --projects=resumable-rx-resource
+npx nx run-many -t lint test build --projects=updatable-rx-resource
 ```
 
 Production builds emit Angular Package Format bundles and declarations to
-`dist/packages/resumable-rx-resource`. Publish that output, not the source directory.
+`dist/packages/updatable-rx-resource`. Publish that output, not the source directory.
 See the repository's root README for the manual Nx Release workflow.
 
 ## License

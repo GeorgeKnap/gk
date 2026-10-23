@@ -1,13 +1,13 @@
-# resumable-rx-resource
+# updatable-rx-resource
 
 An npm-workspace Nx repository containing one publishable Angular library:
-`packages/resumable-rx-resource`.
+`packages/updatable-rx-resource`, published as `@gk/updatable-rx-resource`.
 
-The package exports `resumableRxResource`, a wrapper for Angular's `rxResource`
+The package exports `updatableRxResource`, a wrapper for Angular's `rxResource`
 whose local value writes do not cancel its observable subscription. A writable
 `linkedSignal` holds local edits until the next source emission or resource reset.
 
-See the [usage guide](packages/resumable-rx-resource/README.md) for examples, API
+See the [usage guide](packages/updatable-rx-resource/README.md) for examples, API
 details, equality behavior, and differences from native resource state.
 
 ## Prerequisites
@@ -32,7 +32,7 @@ npm run lint
 Run all verification targets together:
 
 ```bash
-npx nx run-many -t lint test build --projects=resumable-rx-resource
+npx nx run-many -t lint test build --projects=updatable-rx-resource
 ```
 
 The production build performs Angular compilation and template type checking.
@@ -41,10 +41,10 @@ There are no separate application, e2e, or TypeScript-solution projects.
 
 ## Package Layout
 
-- `packages/resumable-rx-resource/src/index.ts`: public source entry point.
-- `packages/resumable-rx-resource/ng-package.json`: Angular package build settings.
-- `packages/resumable-rx-resource/project.json`: Nx build, test, and release settings.
-- `dist/packages/resumable-rx-resource`: publishable Angular Package Format output.
+- `packages/updatable-rx-resource/src/index.ts`: public source entry point.
+- `packages/updatable-rx-resource/ng-package.json`: Angular package build settings.
+- `packages/updatable-rx-resource/project.json`: Nx build, test, and release settings.
+- `dist/packages/updatable-rx-resource`: publishable Angular Package Format output.
 
 The root `@org/source` project is private infrastructure, not an npm release
 candidate. Its existing `local-registry` target remains available for Verdaccio.
@@ -55,7 +55,7 @@ Build first, then inspect the output directory:
 
 ```bash
 npm run build
-cd dist/packages/resumable-rx-resource
+cd dist/packages/updatable-rx-resource
 npm pack --dry-run --json
 npm publish --dry-run --ignore-scripts --registry=https://registry.npmjs.org/
 ```
@@ -65,8 +65,8 @@ type declarations. Do not publish the source workspace directory.
 
 ## Release To npm
 
-The intended public npm name is `resumable-rx-resource`, initially at `0.0.1`.
-Before publishing, verify that your npm account can publish that name, authenticate
+The public npm name is `@gk/updatable-rx-resource`, initially at `0.0.1`.
+Before publishing, verify that your npm account can publish to the `@gk` scope, authenticate
 with npm, and satisfy npm's 2FA requirements. No credentials belong in this repo.
 
 From the repository root, preview the first release without creating files,
@@ -89,8 +89,8 @@ npx nx release patch --dry-run --skip-publish
 npx nx release patch
 ```
 
-Nx Release selects only `resumable-rx-resource`. It builds before versioning,
-then updates and publishes the manifest in `dist/packages/resumable-rx-resource`.
+Nx Release selects only `updatable-rx-resource`. It builds before versioning,
+then updates and publishes the manifest in `dist/packages/updatable-rx-resource`.
 The source manifest's seed version is not the authoritative version after a
 release. Do not rebuild between release versioning and publication: rebuilding
 would overwrite the versioned artifact. Preserve and push release commits/tags
@@ -100,7 +100,7 @@ For a release already versioned by Nx, publish the existing artifact without
 rebuilding:
 
 ```bash
-npx nx release publish --projects=resumable-rx-resource
+npx nx release publish --projects=updatable-rx-resource
 ```
 
 CI checks formatting, lint, tests, and production packaging. Publishing is a

@@ -17,7 +17,9 @@
     "noUncheckedSideEffectImports": false,
     "types": [],
     "paths": {
-      "resumable-rx-resource": ["./packages/resumable-rx-resource/src/index.ts"]
+      "@gk/updatable-rx-resource": [
+        "./packages/updatable-rx-resource/src/index.ts"
+      ]
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "resumable-rx-resource",
+  "name": "updatable-rx-resource",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/resumable-rx-resource/src",
+  "sourceRoot": "packages/updatable-rx-resource/src",
   "prefix": "lib",
   "projectType": "library",
   "release": {
@@ -18,12 +18,12 @@
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "defaultConfiguration": "production",
       "options": {
-        "project": "packages/resumable-rx-resource/ng-package.json",
-        "tsConfig": "packages/resumable-rx-resource/tsconfig.lib.json"
+        "project": "packages/updatable-rx-resource/ng-package.json",
+        "tsConfig": "packages/updatable-rx-resource/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "packages/resumable-rx-resource/tsconfig.lib.prod.json"
+          "tsConfig": "packages/updatable-rx-resource/tsconfig.lib.prod.json"
         },
         "development": {}
       }

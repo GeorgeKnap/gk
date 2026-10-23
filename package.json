@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx build resumable-rx-resource",
-    "test": "nx test resumable-rx-resource",
-    "lint": "nx lint resumable-rx-resource",
+    "build": "nx build updatable-rx-resource",
+    "test": "nx test updatable-rx-resource",
+    "lint": "nx lint updatable-rx-resource",
     "release": "nx release"
   },
   "engines": {
