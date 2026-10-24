@@ -46,9 +46,6 @@ There are no separate application, e2e, or TypeScript-solution projects.
 - `packages/updatable-rx-resource/project.json`: Nx build, test, and release settings.
 - `dist/packages/updatable-rx-resource`: publishable Angular Package Format output.
 
-The root `@org/source` project is private infrastructure, not an npm release
-candidate. Its existing `local-registry` target remains available for Verdaccio.
-
 ## Validate The Archive
 
 Build first, then inspect the output directory:

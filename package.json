@@ -47,23 +47,9 @@
     "tslib": "^2.3.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.63.0",
-    "verdaccio": "6.4.0",
     "vitest": "~4.1.10"
   },
   "workspaces": [
     "packages/*"
-  ],
-  "nx": {
-    "includedScripts": [],
-    "targets": {
-      "local-registry": {
-        "executor": "@nx/js:verdaccio",
-        "options": {
-          "port": 4873,
-          "config": ".verdaccio/config.yml",
-          "storage": "tmp/local-registry/storage"
-        }
-      }
-    }
-  }
+  ]
 }
