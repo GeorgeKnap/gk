@@ -1,3 +1,13 @@
+## 0.0.2 (2026-10-24)
+
+### 🩹 Fixes
+
+- update package name to correct scope from @gk to @geetium ([279cf7a](https://github.com/GeorgeKnap/gk/commit/279cf7a))
+
+### ❤️ Thank You
+
+- George Knap
+
 ## 0.0.1 (2026-10-24)
 
 ### 🚀 Features
