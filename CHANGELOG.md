@@ -1,3 +1,14 @@
+## 0.0.3 (2026-10-24)
+
+### 🩹 Fixes
+
+- add repository information to package.json ([768f904](https://github.com/GeorgeKnap/gk/commit/768f904))
+- improve equality handling in updatableRxResource and enhance README documentation ([54352a3](https://github.com/GeorgeKnap/gk/commit/54352a3))
+
+### ❤️ Thank You
+
+- George Knap
+
 ## 0.0.2 (2026-10-24)
 
 ### 🩹 Fixes
