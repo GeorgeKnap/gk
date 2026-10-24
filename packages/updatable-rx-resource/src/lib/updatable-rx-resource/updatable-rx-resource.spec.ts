@@ -162,6 +162,48 @@ describe('updatableRxResource', () => {
     expect(resource.error()).toBeUndefined();
   });
 
+  it('restores the native value when an emission compares equal to the local override', async () => {
+    const events = new Subject<{ id: number; label: string }>();
+    const equal = (previous: { id: number }, next: { id: number }) =>
+      previous.id === next.id;
+    const subscribed = vi.fn();
+    const unsubscribed = vi.fn();
+    const resource = TestBed.runInInjectionContext(() =>
+      updatableRxResource({
+        stream: () =>
+          new Observable<{ id: number; label: string }>((subscriber) => {
+            subscribed();
+            const subscription = events.subscribe(subscriber);
+            return () => {
+              subscription.unsubscribe();
+              unsubscribed();
+            };
+          }),
+        equal,
+      }),
+    );
+    const first = { id: 1, label: 'server' };
+    const local = { id: 1, label: 'local' };
+    TestBed.tick();
+    events.next(first);
+    await Promise.resolve();
+    expect(resource.value()).toBe(first);
+
+    resource.set({ id: 2, label: 'intermediate local' });
+    resource.set(local);
+    expect(resource.value()).toBe(local);
+    events.next({ id: 1, label: 'new server value' });
+
+    expect(resource.status()).toBe('resolved');
+    expect(resource.value()).toBe(first);
+    expect(resource.snapshot()).toEqual({ status: 'resolved', value: first });
+    expect(resource.hasValue()).toBe(true);
+    expect(subscribed).toHaveBeenCalledTimes(1);
+    expect(unsubscribed).not.toHaveBeenCalled();
+    resource.destroy();
+    expect(unsubscribed).toHaveBeenCalledTimes(1);
+  });
+
   it('restores native errors, permits set recovery, and preserves update-on-error throwing', async () => {
     const events = new Subject<number>();
     const resource = TestBed.runInInjectionContext(() =>
@@ -306,8 +348,8 @@ describe('updatableRxResource', () => {
     const resource = TestBed.runInInjectionContext(() =>
       updatableRxResource({ stream: () => events }),
     );
-    const readonlyResource: Resource<number | undefined> =
-      resource.asReadonly();
+      const readonlyResource: Resource<number | undefined> =
+        resource.asReadonly();
     const readonlyValue = resource.value.asReadonly();
     const defined = computed(() => readonlyResource.hasValue());
     expect('set' in readonlyValue).toBe(false);

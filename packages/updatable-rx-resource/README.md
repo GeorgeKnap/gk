@@ -212,16 +212,17 @@ const resource = updatableRxResource({
 ```
 
 Here `users$` is an `Observable<User>` and creation occurs in an injection context.
-Equality applies to source values through Angular and to local linked-value
-notifications. The comparator is not called with implicit `undefined` values or
-internal error state.
+The comparator applies to native source values through Angular. The wrapper's
+public linked value uses `Object.is`, so an explicit local edit remains visible
+even when it compares equal to the current source value under `equal`. The native
+resource still retains its last value when a new emission compares equal to it.
 
 Every active source emission ends a local override, even a repeated primitive,
-the same object reference, or a value considered equal by `equal`. Equality can
-still retain an equivalent existing object and suppress value notifications.
-Consequently, an emission may change `status()` from `local` to `resolved` without
-notifying consumers of `value()`. Do not ignore object fields in `equal` when
-those fields need to trigger rendering.
+the same object reference, or a value considered equal by `equal`. After the
+override ends, the public value is the native resource's current value. If `equal`
+retained an earlier object reference, that earlier object is restored rather than
+the newest equal emission. Native equality can suppress source-value notifications;
+do not ignore fields in `equal` when those fields need to trigger rendering.
 
 ## Reloads And Lifecycle Differences
 

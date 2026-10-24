@@ -85,14 +85,6 @@ export function updatableRxResource<T, R>(
   const value = linkedSignal({
     source,
     computation: () => native.value(),
-    equal: (previous, next) => {
-      if (untracked(destroyed) || untracked(native.status) === 'error') {
-        return false;
-      }
-      return previous === undefined || next === undefined
-        ? Object.is(previous, next)
-        : (options.equal?.(previous, next) ?? Object.is(previous, next));
-    },
     set: (next, rawSet) => {
       if (!untracked(destroyed)) {
         untracked(() => {
