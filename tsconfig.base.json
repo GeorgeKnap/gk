@@ -17,7 +17,7 @@
     "noUncheckedSideEffectImports": false,
     "types": [],
     "paths": {
-      "@gk/updatable-rx-resource": [
+      "@geetium/updatable-rx-resource": [
         "./packages/updatable-rx-resource/src/index.ts"
       ]
     }

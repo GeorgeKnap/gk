@@ -15,7 +15,7 @@ available from Angular; there is no component, custom options type, or resume me
 Once published to npm:
 
 ```bash
-npm install @gk/updatable-rx-resource
+npm install @geetium/updatable-rx-resource
 ```
 
 Requires Angular `^22.2.3` and RxJS `^7.8.2`. Both are external peer dependencies,
@@ -29,7 +29,7 @@ Create the resource in an Angular injection context, such as a service field:
 ```typescript
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { updatableRxResource } from '@gk/updatable-rx-resource';
+import { updatableRxResource } from '@geetium/updatable-rx-resource';
 
 @Injectable({ providedIn: 'root' })
 export class CounterStore {
@@ -79,7 +79,7 @@ Options use Angular's current `params`/`stream` API:
 ```typescript
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { updatableRxResource } from '@gk/updatable-rx-resource';
+import { updatableRxResource } from '@geetium/updatable-rx-resource';
 
 interface User {
   id: number;
@@ -125,7 +125,7 @@ The function has the same overloads as `rxResource`:
 import type { ResourceRef } from '@angular/core';
 import type { RxResourceOptions } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { updatableRxResource } from '@gk/updatable-rx-resource';
+import { updatableRxResource } from '@geetium/updatable-rx-resource';
 
 // Within an injection context:
 const optional = updatableRxResource({ stream: () => of(1) });
@@ -254,7 +254,7 @@ resource elsewhere, pass an injector explicitly:
 ```typescript
 import type { Injector, ResourceRef } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { updatableRxResource } from '@gk/updatable-rx-resource';
+import { updatableRxResource } from '@geetium/updatable-rx-resource';
 
 export function createCounterResource(
   injector: Injector,

@@ -1,7 +1,7 @@
 # updatable-rx-resource
 
 An npm-workspace Nx repository containing one publishable Angular library:
-`packages/updatable-rx-resource`, published as `@gk/updatable-rx-resource`.
+`packages/updatable-rx-resource`, published as `@geetium/updatable-rx-resource`.
 
 The package exports `updatableRxResource`, a wrapper for Angular's `rxResource`
 whose local value writes do not cancel its observable subscription. A writable
@@ -62,43 +62,33 @@ type declarations. Do not publish the source workspace directory.
 
 ## Release To npm
 
-The public npm name is `@gk/updatable-rx-resource`, initially at `0.0.1`.
-Before publishing, verify that your npm account can publish to the `@gk` scope, authenticate
-with npm, and satisfy npm's 2FA requirements. No credentials belong in this repo.
+The public npm name is `@geetium/updatable-rx-resource`, first published at `0.0.1`.
+Publishing requires an npm account with write access to the `geetium` organization
+and npm's 2FA. No credentials belong in this repo.
 
-From the repository root, preview the first release without creating files,
-commits, tags, or an npm publication:
-
-```bash
-npx nx release 0.0.1 --first-release --dry-run --skip-publish
-```
-
-After reviewing the preview, create and publish the first release:
-
-```bash
-npx nx release 0.0.1 --first-release
-```
-
-Subsequent releases use the Git release tag as the current-version source:
+The account uses a security key or passkey for 2FA. `nx release` runs `npm publish`
+non-interactively, so it cannot complete that browser check and reports a missing
+OTP. Version with Nx, then publish the built artifact with npm:
 
 ```bash
 npx nx release patch --dry-run --skip-publish
-npx nx release patch
+npx nx release patch --skip-publish
+npm publish ./dist/packages/updatable-rx-resource --access public
+git push origin main --follow-tags
 ```
+
+Replace `patch` with `minor`, `major`, or an exact version as needed.
+`npm publish` prompts for the security-key confirmation in the browser.
 
 Nx Release selects only `updatable-rx-resource`. It builds before versioning,
-then updates and publishes the manifest in `dist/packages/updatable-rx-resource`.
-The source manifest's seed version is not the authoritative version after a
-release. Do not rebuild between release versioning and publication: rebuilding
-would overwrite the versioned artifact. Preserve and push release commits/tags
-according to your repository workflow.
+then updates the manifest in `dist/packages/updatable-rx-resource`. The current
+version comes from the latest `v*` Git tag, so push release tags. The source
+manifest's version is not authoritative after a release. Do not rebuild between
+versioning and `npm publish`: rebuilding would overwrite the versioned artifact.
 
-For a release already versioned by Nx, publish the existing artifact without
-rebuilding:
-
-```bash
-npx nx release publish --projects=updatable-rx-resource
-```
+With an authenticator-app OTP or an npm granular token that bypasses 2FA,
+`npx nx release patch` can publish directly. Retry only a failed publish with
+`npx nx release publish --projects=updatable-rx-resource --otp=<code>`.
 
 CI checks formatting, lint, tests, and production packaging. Publishing is a
 manual workflow; no automatic npm publication is configured.
