@@ -1,5 +1,9 @@
 {
-  "name": "@gk/updatable-rx-resource",
+  "name": "@geetium/updatable-rx-resource",
+  "author": {
+    "name": "George Knap",
+    "email": "george.knap@geetium.com"
+  },
   "version": "0.0.1",
   "description": "Angular rxResource with writable local values that keep the source stream subscribed.",
   "license": "MIT",
