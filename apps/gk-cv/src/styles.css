@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ng-red: oklch(63.32% 0.24 31.68);
+  --color-ng-pink: oklch(69.02% 0.277 332.77);
+  --color-ng-violet: oklch(53.18% 0.28 296.97);
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-shimmer: shimmer 6s linear infinite;
+  --animate-float: float 14s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+    }
+  }
+
+  @keyframes shimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes float {
+    50% {
+      translate: 2rem -1.5rem;
+      scale: 1.08;
+    }
+  }
+}
+
+html {
+  color-scheme: light dark;
+  scroll-padding-top: 5rem;
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  @apply bg-white text-slate-700 antialiased dark:bg-slate-950 dark:text-slate-300;
+}
+
+/* Progressive enhancement: browsers without view timelines show content statically. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        translate: 0 2rem;
+      }
+    }
+
+    @keyframes progress {
+      from {
+        scale: 0 1;
+      }
+    }
+
+    .reveal {
+      animation: reveal linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+
+    .scroll-progress {
+      animation: progress linear;
+      animation-timeline: scroll(root);
+    }
+  }
+}
