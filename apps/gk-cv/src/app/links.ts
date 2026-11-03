@@ -39,10 +39,11 @@ const outline =
       </a>
       <a
         [href]="profile.cv"
-        download
+        target="_blank"
+        rel="noopener noreferrer"
         class="from-ng-red via-ng-pink to-ng-violet inline-flex items-center gap-2 rounded-full bg-linear-to-r px-6 py-3 font-medium text-white shadow-lg shadow-ng-pink/20 transition-transform hover:scale-105"
       >
-        Download CV (PDF)
+        View CV (PDF)
       </a>
       <button type="button" gkMailto [class]="outline">Email me</button>
     </div>

@@ -19,7 +19,7 @@ export const profile = {
   location: 'Czech Rep. / Austria / remote',
   linkedin: 'https://www.linkedin.com/in/george-knap',
   github: 'https://github.com/GeorgeKnap',
-  cv: 'assets/CV_George_Knap.pdf',
+  cv: 'https://drive.google.com/file/d/12zZnvkwcg3lERGXs801LOe0oPYApjKlw/view?usp=drive_link',
   photo: 'assets/profile-pic.png',
   summary:
     'Senior Angular & Nx Engineer and Developer Experience lead with extensive expertise in architecting high-performance web platforms, large-scale monorepos, and agentic engineering workflows. Recognized for driving modern frontend modernization, optimizing CI pipelines, and delivering robust scalable solutions across international enterprise environments.',
