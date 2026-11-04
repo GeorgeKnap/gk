@@ -50,6 +50,10 @@ export const skillGroups: readonly SkillGroup[] = [
     ],
   },
   {
+    title: 'Mobile apps',
+    items: ['Flutter', 'Dart', 'Material components', 'Angular Native', 'Nativescript'],
+  },
+  {
     title: 'Testing & tooling',
     items: ['Jest', 'Vitest', 'Cypress', 'ESLint', 'Oxlint', 'Prettier', 'Oxfmt', 'TypeScript'],
   },
