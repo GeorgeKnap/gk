@@ -120,11 +120,11 @@ export const experience: readonly Job[] = [
     period: '2018 – present',
     url: 'https://www.solar-log.com',
     summary: [
-      'Tech lead and architect responsible for the core implementation of the PV monitoring platform Enerest WEB 4.',
-      'Built and maintained Angular monitoring modules for a PV platform used by 400k+ users across 140 countries, with a focus on uptime and performance.',
+      'Tech lead and architect responsible for the core implementation of the PV monitoring platform Enerest WEB 4U.',
+      'Built and maintained Angular system for monitoring ~450,000 industrial PV installations across 140 countries.',
       'Lead and mentor team members, and optimize the Nx pipeline to bring its performance into CI for a smooth developer experience.',
     ],
-    stack: 'Nx 22, Angular 21, Material design system, Highcharts, AG Grid, Tailwind, Jest/Vitest, Cypress, Storybook',
+    stack: 'Nx 22+, Angular 22+, Material design system, Highcharts, AG Grid, Tailwind, Jest/Vitest, Cypress, Storybook, Oxlint, Oxfmt',
   },
   {
     company: 'Entain Services Austria',
@@ -135,6 +135,7 @@ export const experience: readonly Job[] = [
       'Responsible for DX of one of the largest Nx monorepos in the world in the sports betting and online gaming industry.',
       "Migrated ESLint to flat-config, moved tooling to ESM, updated code-pushup rules to visualize ESLint KPI statistics, and refactored legacy code to use Nx's affected and caching mechanisms.",
     ],
+    stack: 'Nx, Angular, ESLint, Code Pushup, .NET, WebSockets',
   },
   {
     company: 'Svihej.cz jumping ropes community portal',
